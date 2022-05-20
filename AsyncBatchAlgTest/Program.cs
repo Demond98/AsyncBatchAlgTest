@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-
-namespace AsyncBatchAlgTest
+﻿namespace AsyncBatchAlgTest
 {
 	class Program
 	{
-		static async Task Main()
+		static void Main()
 		{
-			BenchmarkDotNet.Running.BenchmarkRunner.Run<PerformanceTest>();			
+			BenchmarkDotNet.Running.BenchmarkRunner.Run<PerformanceTest>();
 		}
 	}
 }

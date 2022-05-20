@@ -28,23 +28,28 @@ namespace AsyncBatchAlgTest
 			_range = Enumerable.Range(0, RangeCount).Select(a => random.Next(MinDelayTime, MaxDelayTime)).ToArray();
 		}
 
+		[Benchmark]
+		public async Task EnumeratorExecuterTest()
+		{
+			await _range.ExecuteEnumerator(BatchSize, static async a => await GetDelayTask(a));
+		}
 
 		[Benchmark]
 		public async Task ChannelExecuterTest()
 		{
-			await _range.ExecuteChannel(BatchSize, async a => await GetDelayTask(a));
-		}
-
-		[Benchmark]
-		public async Task EnumeratorExecuterTest()
-		{
-			await _range.ExecuteEnumerator(BatchSize, async a => await GetDelayTask(a));
+			await _range.ExecuteChannel(BatchSize, static async a => await GetDelayTask(a));
 		}
 
 		[Benchmark]
 		public async Task ParallelExecuterTest()
 		{
-			await _range.ExecuteAsyncParallel(BatchSize, async (a, c) => await GetDelayTask(a));
+			await _range.ExecuteAsyncParallel(BatchSize, static async (a, c) => await GetDelayTask(a));
+		}
+
+		[Benchmark]
+		public async Task SemaphoreExecuterTest()
+		{
+			await _range.ExecuteSemaphore(4, static async a => await GetDelayTask(a));
 		}
 	}
 }

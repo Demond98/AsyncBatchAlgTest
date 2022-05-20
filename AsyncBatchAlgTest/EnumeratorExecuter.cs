@@ -1,6 +1,6 @@
 ﻿namespace AsyncBatchAlgTest
 {
-	public static class EnumeratorExecutor
+	public static class EnumeratorExecuter
 	{
 		public static async Task ExecuteEnumerator<T>(this IEnumerable<T> collection, int batchCount, Func<T, Task> action)
 		{
