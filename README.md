@@ -15,26 +15,30 @@ RunStrategy=ColdStart  UnrollFactor=1  WarmupCount=1
 
 |                 Method |  N  |  P  |    Mean |    Error |   StdDev | Allocated |
 |----------------------- |:---:|:---:|--------:|---------:|---------:|----------:|
-| EnumeratorExecuterTest |  20 |   4 | 2.770 s | 0.2966 s | 0.0163 s |     10 KB |
-|    ChannelExecuterTest |  20 |   4 | 4.119 s | 0.3079 s | 0.0169 s |     13 KB |
-|   ParallelExecuterTest |  20 |   4 | 4.118 s | 0.0708 s | 0.0039 s |     12 KB |
-|  SemaphoreExecuterTest |  20 |   4 | 4.121 s | 0.0682 s | 0.0037 s |     14 KB |
-|   DataflowExecuterTest |  20 |   4 | 4.124 s | 0.2634 s | 0.0144 s |     16 KB |
-| EnumeratorExecuterTest |  20 |  20 | 1.012 s | 0.0652 s | 0.0036 s |     11 KB |
-|    ChannelExecuterTest |  20 |  20 | 1.016 s | 0.1433 s | 0.0079 s |     19 KB |
-|   ParallelExecuterTest |  20 |  20 | 1.011 s | 0.2319 s | 0.0127 s |     13 KB |
-|  SemaphoreExecuterTest |  20 |  20 | 1.007 s | 0.0478 s | 0.0026 s |     13 KB |
-|   DataflowExecuterTest |  20 |  20 | 1.006 s | 0.1943 s | 0.0107 s |     16 KB |
-| EnumeratorExecuterTest |  40 |   4 | 4.852 s | 0.2637 s | 0.0145 s |     16 KB |
-|    ChannelExecuterTest |  40 |   4 | 8.354 s | 0.5772 s | 0.0316 s |     22 KB |
-|   ParallelExecuterTest |  40 |   4 | 8.381 s | 0.2888 s | 0.0158 s |     20 KB |
-|  SemaphoreExecuterTest |  40 |   4 | 8.367 s | 0.2317 s | 0.0127 s |     25 KB |
-|   DataflowExecuterTest |  40 |   4 | 8.378 s | 0.3968 s | 0.0218 s |     30 KB |
-| EnumeratorExecuterTest |  40 |  20 | 1.688 s | 2.0521 s | 0.1125 s |     23 KB |
-|    ChannelExecuterTest |  40 |  20 | 1.993 s | 0.2262 s | 0.0124 s |     27 KB |
-|   ParallelExecuterTest |  40 |  20 | 1.990 s | 0.1572 s | 0.0086 s |     23 KB |
-|  SemaphoreExecuterTest |  40 |  20 | 1.992 s | 0.0364 s | 0.0020 s |     25 KB |
-|   DataflowExecuterTest |  40 |  20 | 1.998 s | 0.0712 s | 0.0039 s |     29 KB |
+| EnumeratorExecuterTest |  20 |   4 | 2.765 s | 0.1960 s | 0.0107 s |     10 KB |
+|    ChannelExecuterTest |  20 |   4 | 4.127 s | 0.2210 s | 0.0121 s |     13 KB |
+|   ParallelExecuterTest |  20 |   4 | 4.127 s | 0.1553 s | 0.0085 s |     11 KB |
+|  SemaphoreExecuterTest |  20 |   4 | 4.130 s | 0.4881 s | 0.0268 s |     14 KB |
+|   DataflowExecuterTest |  20 |   4 | 4.121 s | 0.2361 s | 0.0129 s |     16 KB |
+|  PartitionExecuterTest |  20 |   4 | 4.346 s | 0.3749 s | 0.0206 s |     29 KB |
+| EnumeratorExecuterTest |  20 |  20 | 1.004 s | 0.1176 s | 0.0064 s |     11 KB |
+|    ChannelExecuterTest |  20 |  20 | 1.014 s | 0.2296 s | 0.0126 s |     19 KB |
+|   ParallelExecuterTest |  20 |  20 | 1.004 s | 0.2052 s | 0.0112 s |     13 KB |
+|  SemaphoreExecuterTest |  20 |  20 | 1.007 s | 0.1326 s | 0.0073 s |     13 KB |
+|   DataflowExecuterTest |  20 |  20 | 1.011 s | 0.2231 s | 0.0122 s |     16 KB |
+|  PartitionExecuterTest |  20 |  20 | 1.004 s | 0.1331 s | 0.0073 s |     66 KB |
+| EnumeratorExecuterTest |  40 |   4 | 4.853 s | 0.4551 s | 0.0249 s |     16 KB |
+|    ChannelExecuterTest |  40 |   4 | 8.367 s | 0.3474 s | 0.0190 s |     22 KB |
+|   ParallelExecuterTest |  40 |   4 | 8.376 s | 0.2648 s | 0.0145 s |     20 KB |
+|  SemaphoreExecuterTest |  40 |   4 | 8.362 s | 0.1017 s | 0.0056 s |     25 KB |
+|   DataflowExecuterTest |  40 |   4 | 8.375 s | 0.2242 s | 0.0123 s |     29 KB |
+|  PartitionExecuterTest |  40 |   4 | 9.625 s | 0.4677 s | 0.0256 s |     37 KB |
+| EnumeratorExecuterTest |  40 |  20 | 1.729 s | 1.6375 s | 0.0898 s |     21 KB |
+|    ChannelExecuterTest |  40 |  20 | 1.992 s | 0.2546 s | 0.0140 s |     27 KB |
+|   ParallelExecuterTest |  40 |  20 | 1.987 s | 0.1200 s | 0.0066 s |     22 KB |
+|  SemaphoreExecuterTest |  40 |  20 | 1.993 s | 0.3101 s | 0.0170 s |     25 KB |
+|   DataflowExecuterTest |  40 |  20 | 1.996 s | 0.2107 s | 0.0116 s |     29 KB |
+|  PartitionExecuterTest |  40 |  20 | 1.998 s | 0.0751 s | 0.0041 s |     75 KB |
 
 ## Legends
 

@@ -58,5 +58,11 @@ namespace AsyncBatchAlgTest
 		{
 			await _range.ExecuteDataflow(BatchSize, static async a => await GetDelayTask(a));
 		}
+
+		[Benchmark]
+		public async Task PartitionExecuterTest()
+		{
+			await _range.ExecutePartition(BatchSize, static async a => await GetDelayTask(a));
+		}
 	}
 }
