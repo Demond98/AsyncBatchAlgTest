@@ -1,6 +1,18 @@
 # Summary
 
-Tests of algorithms for asynchronous execution of N tasks with max degree of parallelism P
+Tests of algorithms for asynchronous execution of N tasks with max degree of parallelism P.
+
+Alg example:  
+```C#
+public static class ParallelExecuter
+{
+  public static async Task ExecuteAsyncParallel<T>(this IEnumerable<T> collection, int P, Func<T, CancellationToken, ValueTask> action)
+  {
+    var option = new ParallelOptions { MaxDegreeOfParallelism = P };
+    await Parallel.ForEachAsync(collection, option, action);
+  }
+}
+```
 
 # Performance Tests
 
