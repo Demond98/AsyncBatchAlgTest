@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using AsyncBatchAlgTest.Executers;
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 
 namespace AsyncBatchAlgTest
@@ -49,7 +50,13 @@ namespace AsyncBatchAlgTest
 		[Benchmark]
 		public async Task SemaphoreExecuterTest()
 		{
-			await _range.ExecuteSemaphore(4, static async a => await GetDelayTask(a));
+			await _range.ExecuteSemaphore(BatchSize, static async a => await GetDelayTask(a));
+		}
+
+		[Benchmark]
+		public async Task DataflowExecuterTest()
+		{
+			await _range.ExecuteDataflow(BatchSize, static async a => await GetDelayTask(a));
 		}
 	}
 }
