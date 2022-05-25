@@ -32,9 +32,7 @@ namespace AsyncBatchAlgTest
 		[Benchmark]
 		public async Task EnumeratorExecutorTest()
 		{
-			Func<int, Task> getDelay = static async z => await GetDelayTask(z);
-			var actions = _range.Select(z => getDelay.Partial(z));
-			await actions.ExecuteEnumerator(BatchSize);
+			await _range.ExecuteEnumerator(BatchSize, static async z => await GetDelayTask(z));
 		}
 
 		[Benchmark]
@@ -65,6 +63,12 @@ namespace AsyncBatchAlgTest
 		public async Task PartitionExecutorTest()
 		{
 			await _range.ExecutePartition(BatchSize, static async a => await GetDelayTask(a));
+		}
+
+		[Benchmark]
+		public async Task BatchedExecutorTest()
+		{
+			await _range.ExecuteBatched(BatchSize, static async a => await GetDelayTask(a));
 		}
 	}
 }

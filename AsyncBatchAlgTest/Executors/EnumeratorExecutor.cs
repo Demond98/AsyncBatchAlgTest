@@ -2,14 +2,14 @@
 {
 	public static class EnumeratorExecutor
 	{
-		public static async Task ExecuteEnumerator(this IEnumerable<Func<Task>> collection, int batchCount)
+		public static async Task ExecuteEnumerator<T>(this IEnumerable<T> collection, int batchCount, Func<T, Task> action)
 		{
 			var executingTasks = new Task[batchCount];
 
 			using var enumerator = collection.GetEnumerator();
 
 			for (var id = 0; id < batchCount && enumerator.MoveNext(); id++)
-				executingTasks[id] = enumerator.Current();
+				executingTasks[id] = action(enumerator.Current);
 
 			while (enumerator.MoveNext())
 			{
@@ -20,7 +20,7 @@
 					if (executingTasks[i].IsCompleted is false)
 						continue;
 
-					executingTasks[i] = enumerator.Current();
+					executingTasks[i] = action(enumerator.Current);
 
 					if (enumerator.MoveNext() is false)
 						break;
@@ -31,14 +31,14 @@
 			await Task.WhenAll(t);
 		}
 
-		public static async IAsyncEnumerable<T> ExecuteWithResult<T>(IEnumerable<Func<Task<T>>> tasks, int count)
+		public static async IAsyncEnumerable<TOut> ExecuteWithResult<TIn, TOut>(IEnumerable<TIn> collection, int count, Func<TIn, Task<TOut>> func)
 		{
-			var executingTasks = new Task<T>[count];
+			var executingTasks = new Task<TOut>[count];
 
-			using var enumerator = tasks.GetEnumerator();
+			using var enumerator = collection.GetEnumerator();
 
 			for (var id = 0; id < count && enumerator.MoveNext(); id++)
-				executingTasks[id] = enumerator.Current();
+				executingTasks[id] = func(enumerator.Current);
 
 			while (enumerator.MoveNext())
 			{
@@ -50,7 +50,8 @@
 						continue;
 
 					yield return executingTasks[i].Result;
-					executingTasks[i] = enumerator.Current();
+					
+					executingTasks[i] = func(enumerator.Current);
 
 					if (enumerator.MoveNext() is false)
 						break;

@@ -2,7 +2,7 @@
 
 namespace AsyncBatchAlgTest
 {
-	internal class Program
+	internal static class Program
 	{
 		internal static async Task TestAsync()
 		{
