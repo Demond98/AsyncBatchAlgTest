@@ -8,8 +8,15 @@
 
 			using var enumerator = collection.GetEnumerator();
 
-			for (var id = 0; id < batchCount && enumerator.MoveNext(); id++)
+			var id = 0;
+			for (; id < batchCount && enumerator.MoveNext(); id++)
 				executingTasks[id] = action(enumerator.Current);
+
+			if (id < batchCount)
+			{
+				await Task.WhenAll(executingTasks);
+				return;
+			}
 
 			while (enumerator.MoveNext())
 			{
@@ -27,18 +34,27 @@
 				}
 			}
 
-			var t = executingTasks.Where(t => t is not null).ToArray();
-			await Task.WhenAll(t);
+			await Task.WhenAll(executingTasks);
 		}
 
-		public static async IAsyncEnumerable<TOut> ExecuteWithResult<TIn, TOut>(IEnumerable<TIn> collection, int count, Func<TIn, Task<TOut>> func)
+		public static async IAsyncEnumerable<TOut> ExecuteWithResult<TIn, TOut>(IEnumerable<TIn> collection, int batchCount, Func<TIn, Task<TOut>> func)
 		{
-			var executingTasks = new Task<TOut>[count];
+			var executingTasks = new Task<TOut>[batchCount];
 
 			using var enumerator = collection.GetEnumerator();
 
-			for (var id = 0; id < count && enumerator.MoveNext(); id++)
+			var id = 0;
+			for (; id < batchCount && enumerator.MoveNext(); id++)
 				executingTasks[id] = func(enumerator.Current);
+			
+			if (id < batchCount)
+			{
+				await Task.WhenAll(executingTasks);
+				foreach (var task in executingTasks)
+					yield return task.Result;
+
+				yield break;
+			}
 
 			while (enumerator.MoveNext())
 			{
@@ -58,11 +74,8 @@
 				}
 			}
 
-			var resultTasks = executingTasks.Where(t => t is not null).ToArray();
-
-			await Task.WhenAll(resultTasks);
-
-			foreach (var task in resultTasks)
+			await Task.WhenAll(executingTasks);
+			foreach (var task in executingTasks)
 				yield return task.Result;
 		}
 	}
