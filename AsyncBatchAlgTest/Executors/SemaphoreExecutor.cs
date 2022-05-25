@@ -1,6 +1,6 @@
-﻿namespace AsyncBatchAlgTest.Executers
+﻿namespace AsyncBatchAlgTest.Executors
 {
-	public static class SemaphoreExecuter
+	public static class SemaphoreExecutor
 	{
 		private static async Task AwaitFunc<T>(Func<T, Task> action, T value, Semaphore semaphore)
 		{

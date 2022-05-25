@@ -1,6 +1,6 @@
 ﻿using System.Threading.Channels;
 
-namespace AsyncBatchAlgTest.Executers
+namespace AsyncBatchAlgTest.Executors
 {
 	public static class ChannelExecutor
 	{

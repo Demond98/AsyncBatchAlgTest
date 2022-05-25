@@ -1,6 +1,6 @@
-﻿namespace AsyncBatchAlgTest.Executers
+﻿namespace AsyncBatchAlgTest.Executors
 {
-	public static class ParallelExecuter
+	public static class ParallelExecutor
 	{
 		public static async Task ExecuteAsyncParallel<T>(this IEnumerable<T> collection, int batchCount, Func<T, CancellationToken, ValueTask> action)
 		{

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncBatchAlgTest.Executers
+namespace AsyncBatchAlgTest.Executors
 {
-	public static class PartitionExecuter
+	public static class PartitionExecutor
 	{
         public static async Task ExecutePartition<T>(this IEnumerable<T> source, int dop, Func<T, Task> body)
         {

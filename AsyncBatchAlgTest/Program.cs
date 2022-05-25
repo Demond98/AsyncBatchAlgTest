@@ -1,4 +1,4 @@
-﻿using AsyncBatchAlgTest.Executers;
+﻿using AsyncBatchAlgTest.Executors;
 
 namespace AsyncBatchAlgTest
 {
