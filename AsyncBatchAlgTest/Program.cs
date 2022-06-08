@@ -24,6 +24,7 @@ namespace AsyncBatchAlgTest
 			//await TestAsync();
 
 			BenchmarkDotNet.Running.BenchmarkRunner.Run<PerformanceTest>();
+			Console.ReadKey();
 		}
 	}
 }
