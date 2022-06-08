@@ -16,7 +16,7 @@ namespace AsyncBatchAlgTest
 			var random = new Random(0);
 			var range = Enumerable.Range(0, 100).Select(a => random.Next(500, 1000)).ToArray();
 
-			await range.ExecutePartition(4, GetDelayTask);
+			await range.ExecuteChannel(4, GetDelayTask);
 		}
 
 		internal static void Main()
