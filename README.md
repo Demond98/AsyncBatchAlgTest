@@ -67,8 +67,8 @@ RunStrategy=ColdStart  UnrollFactor=1  WarmupCount=1
 
 ## Legends
 
-RangeCount : Value of the 'RangeCount' parameter  
-BatchSize  : Value of the 'BatchSize' parameter  
+N          : Count of tasks  
+P          : Max degree of parallelism  
 Mean       : Arithmetic mean of all measurements  
 Error      : Half of 99.9% confidence interval  
 StdDev     : Standard deviation of all measurements  
