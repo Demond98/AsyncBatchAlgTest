@@ -18,23 +18,27 @@
 				return;
 			}
 
-			while (enumerator.MoveNext())
+			var flag = true;
+			while (flag)
 			{
 				await Task.WhenAny(executingTasks).ConfigureAwait(false);
 
-				for (var i = 0; i < executingTasks.Length; i++)
+				for (var i = 0; i < batchCount; i++)
 				{
 					if (executingTasks[i].IsCompleted is false)
 						continue;
 
-					executingTasks[i] = action(enumerator.Current);
-
-					if (i == executingTasks.Length - 1 || enumerator.MoveNext() is false)
+					if (enumerator.MoveNext() is false)
+					{
+						flag = false;
 						break;
+					}
+
+					executingTasks[i] = action(enumerator.Current);
 				}
 			}
 
-			await Task.WhenAll(executingTasks);
+			await Task.WhenAll(executingTasks).ConfigureAwait(false);
 		}
 
 		public static async IAsyncEnumerable<TOut> ExecuteWithResult<TIn, TOut>(IEnumerable<TIn> collection, int batchCount, Func<TIn, Task<TOut>> func)
@@ -46,34 +50,37 @@
 			var id = 0;
 			for (; id < batchCount && enumerator.MoveNext(); id++)
 				executingTasks[id] = func(enumerator.Current);
-			
+
 			if (id < batchCount)
 			{
 				var tasksNeeded = executingTasks[..id];
-				
+
 				await Task.WhenAll(tasksNeeded).ConfigureAwait(false);
-				
+
 				foreach (var task in tasksNeeded)
 					yield return task.Result;
 
 				yield break;
 			}
 
-			while (enumerator.MoveNext())
+			var flag = true;
+			while (flag)
 			{
 				await Task.WhenAny(executingTasks).ConfigureAwait(false);
 
-				for (var i = 0; i < executingTasks.Length; i++)
+				for (var i = 0; i < batchCount; i++)
 				{
 					if (executingTasks[i].IsCompleted is false)
 						continue;
 
-					yield return executingTasks[i].Result;
-					
-					executingTasks[i] = func(enumerator.Current);
-
-					if (i == executingTasks.Length - 1 || enumerator.MoveNext() is false)
+					if (enumerator.MoveNext() is false)
+					{
+						flag = false;
 						break;
+					}
+
+					executingTasks[i] = func(enumerator.Current);
+					yield return executingTasks[i].Result;
 				}
 			}
 

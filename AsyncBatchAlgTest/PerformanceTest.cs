@@ -35,7 +35,7 @@ namespace AsyncBatchAlgTest
 			await _range.ExecuteEnumerator(BatchSize, static async z => await GetDelayTask(z));
 		}
 
-		[Benchmark]
+		//[Benchmark]
 		public async Task ChannelExecutorTest()
 		{
 			await _range.ExecuteChannel(BatchSize, static async a => await GetDelayTask(a));
@@ -47,25 +47,25 @@ namespace AsyncBatchAlgTest
 			await _range.ExecuteAsyncParallel(BatchSize, static async (a, _) => await GetDelayTask(a));
 		}
 
-		[Benchmark]
+		//[Benchmark]
 		public async Task SemaphoreExecutorTest()
 		{
 			await _range.ExecuteSemaphore(BatchSize, static async a => await GetDelayTask(a));
 		}
 
-		[Benchmark]
+		//[Benchmark]
 		public async Task DataflowExecutorTest()
 		{
 			await _range.ExecuteDataflow(BatchSize, static async a => await GetDelayTask(a));
 		}
 
-		[Benchmark]
+		//[Benchmark]
 		public async Task PartitionExecutorTest()
 		{
 			await _range.ExecutePartition(BatchSize, static async a => await GetDelayTask(a));
 		}
 
-		[Benchmark]
+		//[Benchmark]
 		public async Task BatchedExecutorTest()
 		{
 			await _range.ExecuteBatched(BatchSize, static async a => await GetDelayTask(a));
