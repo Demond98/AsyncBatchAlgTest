@@ -14,13 +14,13 @@
 
 			if (id < batchCount)
 			{
-				await Task.WhenAll(executingTasks);
+				await Task.WhenAll(executingTasks[..id]).ConfigureAwait(false);
 				return;
 			}
 
 			while (enumerator.MoveNext())
 			{
-				await Task.WhenAny(executingTasks);
+				await Task.WhenAny(executingTasks).ConfigureAwait(false);
 
 				for (var i = 0; i < executingTasks.Length; i++)
 				{
@@ -29,7 +29,7 @@
 
 					executingTasks[i] = action(enumerator.Current);
 
-					if (enumerator.MoveNext() is false)
+					if (i == executingTasks.Length - 1 || enumerator.MoveNext() is false)
 						break;
 				}
 			}
@@ -49,8 +49,11 @@
 			
 			if (id < batchCount)
 			{
-				await Task.WhenAll(executingTasks);
-				foreach (var task in executingTasks)
+				var tasksNeeded = executingTasks[..id];
+				
+				await Task.WhenAll(tasksNeeded).ConfigureAwait(false);
+				
+				foreach (var task in tasksNeeded)
 					yield return task.Result;
 
 				yield break;
@@ -58,7 +61,7 @@
 
 			while (enumerator.MoveNext())
 			{
-				await Task.WhenAny(executingTasks);
+				await Task.WhenAny(executingTasks).ConfigureAwait(false);
 
 				for (var i = 0; i < executingTasks.Length; i++)
 				{
@@ -69,12 +72,12 @@
 					
 					executingTasks[i] = func(enumerator.Current);
 
-					if (enumerator.MoveNext() is false)
+					if (i == executingTasks.Length - 1 || enumerator.MoveNext() is false)
 						break;
 				}
 			}
 
-			await Task.WhenAll(executingTasks);
+			await Task.WhenAll(executingTasks).ConfigureAwait(false);
 			foreach (var task in executingTasks)
 				yield return task.Result;
 		}
